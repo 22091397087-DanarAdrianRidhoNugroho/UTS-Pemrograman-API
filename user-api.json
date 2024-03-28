@@ -1,0 +1,306 @@
+{
+    "openapi": "3.0.3",
+    "info":{
+        "title": "User API",
+        "description": "User API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000"
+        }
+    ],
+    "paths": {
+        "/api/users":{
+            "post":{
+                "description": "Register User",
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "examples": {
+                                "laila":{
+                                    "description": "Register User laila",
+                                    "value":{
+                                        "username":"laila",
+                                        "password":"rahasia",
+                                        "name":"laila mamamam"
+                                    }
+                                }
+                            },
+                            "schema":{
+                                "type": "object",
+                                "required": ["username","password","name"],
+                                "properties": {
+                                    "username":{
+                                        "type": "string"
+                                    },
+                                    "password":{
+                                        "type": "string"
+                                    },
+                                    "name":{
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400":{
+                        "description": "Validasi User Error",
+                        "content": {
+                            "application/json":{
+                                "examples": {
+                                    "validationerror":{
+                                        "description": "Validasi Error",
+                                        "value":{
+                                            "errors":{
+                                                "username":[
+                                                    "username tidak boleh kosong",
+                                                    "usename min 6 karakter"
+                                                ],
+                                                "name":[
+                                                    "name tidak boleh kosong",
+                                                    "name min 6 karakter"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201":{
+                        "description": "suksess Register User",
+                        "content": {
+                            "application/json":{
+                                "examples": {
+                                    "success":{
+                                        "description": "Suksess Register User",
+                                        "value":{
+                                            "data":{
+                                                "id":1,
+                                                "name":"laila mamamaam",
+                                                "username":"laila"
+                                            }
+                                        }
+                                    }
+                                },
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "data":{
+                                            "type": "object",
+                                            "properties": {
+                                                "id":{
+                                                    "type": "integer"
+                                                },
+                                                "username":{
+                                                    "type": "string"
+                                                },
+                                                "name":{
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "errors":{
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/login":{
+            "post":{
+                "description": "Login User",
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties": {
+                                    "usename":{
+                                        "type": "string"
+                                    },
+                                    "password":{
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "success login",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "data":{
+                                            "type": "object",
+                                            "properties": {
+                                                "id":{
+                                                    "type": "integer"
+                                                },
+                                                "username":{
+                                                    "type": "string"
+                                                },
+                                                "name":{
+                                                    "type": "string"
+                                                },
+                                                "token":{
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "errors":{
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+        }
+        },
+        "/api/users/getupdate":{
+            "get":{
+                "description": "Get User saat ini",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "Suksess Get User saat ini",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "data":{
+                                            "type": "object",
+                                            "properties": {
+                                                "id":{
+                                                    "type": "integer"
+                                                },
+                                                "username":{
+                                                    "type": "string"
+                                                },
+                                                "name":{
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "errors":{
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch":{
+                "description": "Update User",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "requestBody":{
+                    "description": "Update User",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties": {
+                                    "name":{
+                                        "type": "string"
+                                    },
+                                    "password":{
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "Suksess update User saat ini",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "data":{
+                                            "type": "object",
+                                            "properties": {
+                                                "id":{
+                                                    "type": "integer"
+                                                },
+                                                "username":{
+                                                    "type": "string"
+                                                },
+                                                "name":{
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "errors":{
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/logout":{
+            "delete":{
+                "description": "Logout User",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "Suksess logout User saat ini",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "data":{
+                                            "type": "boolean"
+
+                                        },
+                                        "errors":{
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
